@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../style.css" />
+
+</head>
+
+<body>
+    <div class="page page3">
+        <div class="contaienr">
+            <div class="cover">
+                <img src="../../images/EN-logo.png" alt="" />
+            </div>
+
+            <div class="content">
+                <div class="title">First Aid</div>
+                <div class="intro">
+                    <p>Fees: R1500</p>
+                    <p>Purpose: To provide first aid awareness and basic life support</p>
+                    <br>
+                    <p>Content:</p>
+                    <p>
+                        • Wounds and bleeding <br>
+                        • Burns and fractures <br>
+                        • Emergency scene management <br>
+                        • Cardio-Pulmonary Resuscitation (CPR) <br>
+                        • Respiratory distress e.g., Choking, blocked airway <br>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="back">
+        <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M44 40.8361C39.1069 34.8632 34.7617 31.4739 30.9644 30.6682C27.1671 29.8625 23.5517 29.7408 20.1182 30.303V41L4 23.5453L20.1182 7V17.167C26.4667 17.2172 31.8638 19.4948 36.3095 24C40.7553 28.5052 43.3187 34.1172 44 40.8361Z"
+                fill="none" stroke="#121313" stroke-width="4" stroke-linejoin="round" />
+        </svg>
+        <span>Back</span>
+    </div>
+</body>
+<script>
+    const back = document.querySelector('.back')
+
+    back.addEventListener("click", () => {
+        window.history.back()
+    })
+</script>
+
+</html>

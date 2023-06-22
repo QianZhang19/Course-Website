@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+    <div class="page page4">
+        <div class="container">
+            <div class="title">
+                <h2>Let's Talk</h2>
+                <p>Choose your course</p>
+            </div>
+
+            <div class="form">
+                <div class="form-item">
+                    <div class="form-label">Name</div>
+                    <div class="form-input"><input type="text" validate data-name="Please enter name" /></div>
+                </div>
+
+                <div class="form-item">
+                    <div class="form-label">Phone number</div>
+                    <div class="form-input"><input type="text" validate data-name="Please enter phone number" /></div>
+                </div>
+
+                <div class="form-item">
+                    <div class="form-label">Email</div>
+                    <div class="form-input"><input type="text" validate data-name="Please enter email address" /></div>
+                </div>
+
+                <div class="form-item">
+                    <div class="form-label">Course you're interested in</div>
+                    <div class="form-checkbox">
+                        <label>
+                            <input type="checkbox" name="courses[]" value="First Aid" data-price="1500" />
+                            <span>First Aid - R1500</span>
+                        </label>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <label>
+                            <input type="checkbox" name="courses[]" value="Sewing" data-price="1500" />
+                            <span>Sewing - R1500</span>
+                        </label>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <label>
+                            <input type="checkbox" name="courses[]" value="Landscaping" data-price="1500" />
+                            <span>Landscaping - R1500</span>
+                        </label>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <label>
+                            <input type="checkbox" name="courses[]" value="Life Skills" data-price="1500" />
+                            <span>Life Skills - R1500</span>
+                        </label>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <label>
+                            <input type="checkbox" name="courses[]" value="Childing minding" data-price="750" />
+                            <span>Childing minding - R750</span>
+                        </label>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <label>
+                            <input type="checkbox" name="courses[]" value="Cooking" data-price="750" />
+                            <span>Cooking - R750</span>
+                        </label>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <label>
+                            <input type="checkbox" name="courses[]" value="Garden maintenance" data-price="750" />
+                            <span>Garden maintenance - R750</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-item" id="total-price">Total: 00.00</div>
+
+                <div class="form-item">
+                    <div class="form-button">Discount Calculator</div>
+                    <div class="form-button" id="submit">Submit</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="invoice">Invoice</p>
+        </div>
+    </div>
+
+    <div class="back">
+        <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M44 40.8361C39.1069 34.8632 34.7617 31.4739 30.9644 30.6682C27.1671 29.8625 23.5517 29.7408 20.1182 30.303V41L4 23.5453L20.1182 7V17.167C26.4667 17.2172 31.8638 19.4948 36.3095 24C40.7553 28.5052 43.3187 34.1172 44 40.8361Z"
+                fill="none" stroke="#121313" stroke-width="4" stroke-linejoin="round" />
+        </svg>
+        <span>Back</span>
+    </div>
+</body>
+<script>
+    const checkboxs = document.querySelectorAll('input[type="checkbox"]')
+    const totalPrice = document.querySelector("#total-price")
+    const submit = document.querySelector("#submit")
+    const modal = document.querySelector("#modal")
+    const closeButton = document.querySelector(".close")
+
+    var submitBtn = document.getElementById("submit");
+
+    submitBtn.addEventListener("click", function () {
+        var checkboxes = document.querySelectorAll('input[name="courses[]"]:checked');
+        var selectedCourses = "";
+
+        checkboxes.forEach(function (checkbox) {
+            selectedCourses += "<strong>" + checkbox.value + "</strong>, ";
+        });
+        selectedCourses = selectedCourses.slice(0, -2);
+        var total = calculatorTotalprice();
+        var modalContent = document.getElementById("invoice");
+        modalContent.innerHTML = "Thank you<br> You have chosen the course - " + selectedCourses + "<br>Total price is " + total.toFixed(2) + "<br>We will talk with you soon";
+    });
+
+    function hideModal() {
+        modal.style.display = "none";
+    }
+
+    function calculatorTotalprice() {
+        let total = 0;
+        let count = 0;
+        checkboxs.forEach((checkbox) => {
+            if (checkbox.checked) {
+                count++;
+                const price = checkbox.getAttribute("data-price") || 0;
+                total += Number(price);
+            }
+        });
+        if (count === 2) {
+            total *= 0.95;
+        }
+        if (count === 3) {
+            total *= 0.9;
+        }
+        if (count > 3) {
+            total *= 0.85;
+        }
+        return total
+    }
+
+    function renderTotalPrice() {
+        const total = calculatorTotalprice().toFixed(2)
+        totalPrice.innerHTML = `
+            Total: ${total}
+        `
+    }
+
+    Array.from(checkboxs).forEach((checkbox) => {
+        checkbox.addEventListener("change", (e) => {
+            renderTotalPrice()
+        })
+    })
+
+    function validate() {
+        const inputs = document.querySelectorAll('input[validate]')
+        let success = true
+
+        Array.from(inputs).forEach(input => {
+            console.log(input);
+            const value = input.value
+            const name = input.getAttribute('data-name')
+            if (!value) {
+                alert(name)
+                success = false
+            }
+        })
+
+        return success
+    }
+
+    submit.addEventListener("click", () => {
+        if (validate()) {
+            modal.style.display = "block"
+        }
+    })
+
+    closeButton.addEventListener("click", () => {
+        modal.style.display = "none"
+    })
+
+    const back = document.querySelector('.back')
+
+    back.addEventListener("click", () => {
+        window.history.back()
+    })
+</script>
+
+</html>
